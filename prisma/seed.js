@@ -2,12 +2,16 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const { faker } = require('@faker-js/faker')
 
+function randNonZeroInt(maxInt) {
+    return (Math.floor(Math.random() * maxInt)) + 1
+}
+
 const categories = []
 const products = []
-const numCategories = 5
+const numCategories = randNonZeroInt(5)
 let productId = 0
 for (let i = 1; i < numCategories + 1; i++) {
-    const numProducts = 10
+    const numProducts = randNonZeroInt(10)
     categories.push({
         id: i,
         name: faker.commerce.department(),
@@ -25,10 +29,6 @@ for (let i = 1; i < numCategories + 1; i++) {
         })
     }
 }
-
-console.log(categories)
-console.log(products)
-
 
 const load = async() => {
     try {
