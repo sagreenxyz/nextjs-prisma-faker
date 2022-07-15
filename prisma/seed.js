@@ -1,6 +1,34 @@
 const { PrismaClient } = require('@prisma/client')
-const {categories, products} = require('./data.js')
 const prisma = new PrismaClient()
+const { faker } = require('@faker-js/faker')
+
+const categories = []
+const products = []
+const numCategories = 5
+let productId = 0
+for (let i = 1; i < numCategories + 1; i++) {
+    const numProducts = 10
+    categories.push({
+        id: i,
+        name: faker.commerce.department(),
+        description: faker.commerce.productDescription()
+    })
+    for (let j = 1; j < numProducts + 1; j++) {
+        productId++
+        products.push({
+            id: productId,
+            name: faker.commerce.productName(),
+            description: faker.commerce.productDescription(),
+            price: faker.commerce.price(10, 200),
+            image: faker.image.imageUrl(200, 200, 'business', true),
+            category_id: i
+        })
+    }
+}
+
+console.log(categories)
+console.log(products)
+
 
 const load = async() => {
     try {
