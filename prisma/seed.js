@@ -4,6 +4,9 @@ const prisma = new PrismaClient()
 
 const load = async() => {
     try {
+        await prisma.$queryRaw`TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE`
+        console.log('Category table truncated with cascade to Product table')
+
         await prisma.category.createMany({
             data: categories
         })
